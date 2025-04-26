@@ -543,9 +543,8 @@
         }
         
         // Validate form on submit
-      function validateForm() {
-    // Check testing interest
- function validateForm() {
+
+function validateForm() {
     // Check testing interest
     if (!document.querySelector('input[name="testing_interest"]:checked')) {
         alert('Please indicate whether you are interested in testing our app.');
@@ -560,21 +559,8 @@
     return true;
 }
 
-    // Return true to allow form submission to Formspree
-    return true;
-}
-;
-            }
             
-            // Show thank you message
-            document.getElementById('housingForm').style.display = 'none';
-            document.getElementById('thankYouMessage').style.display = 'block';
-            
-            // In a real implementation, you would submit the form data to your server here
-            // For this demo, we're just showing the thank you message
-            
-            return false; // Prevent actual form submission
-        }
+           
         
         // Initialize progress bar
         updateProgress();
