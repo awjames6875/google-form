@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collective Impact Housing Resources Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2e7d32;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        .submit-button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #1b5e20;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .progress {
+            width: 0%;
+            height: 20px;
+            background-color: #2e7d32;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-header">
+        <h1>Collective Impact Housing Resources Survey</h1>
+        <p>Thank you for taking our housing resources survey! Your feedback will help us improve the Collective Impact app to better serve our community.</p>
+        <p>This survey takes approximately 3-5 minutes to complete. Your responses are confidential.</p>
+        <p><strong>Complete the survey for a chance to win a $50 gift card!</strong></p>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress">0%</div>
+    </div>
+
+    <form id="housingForm" onsubmit="return validateForm()">
+        <!-- Section 1: Housing Status & Needs -->
+        <div class="form-section" id="section1">
+            <div class="section-title">Housing Status & Needs</div>
+            
+            <div class="question">
+                <div class="question-text required">What is your current housing situation?</div>
+                <div class="options">
+                    <div><input type="radio" name="housing_situation" value="Renting" required> Renting</div>
+                    <div><input type="radio" name="housing_situation" value="Own my home"> Own my home</div>
+                    <div><input type="radio" name="housing_situation" value="Paying mortgage"> Paying mortgage</div>
+                    <div><input type="radio" name="housing_situation" value="Facing eviction/foreclosure"> Facing eviction/foreclosure</div>
+                    <div><input type="radio" name="housing_situation" value="Temporarily staying with others"> Temporarily staying with others</div>
+                    <div><input type="radio" name="housing_situation" value="In transitional housing"> In transitional housing</div>
+                    <div><input type="radio" name="housing_situation" value="Currently homeless"> Currently homeless</div>
+                    <div>
+                        <input type="radio" name="housing_situation" value="Other" onclick="toggleOther('housing_situation_other')"> Other:
+                        <input type="text" id="housing_situation_other" style="display:none; width:80%;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">What are your housing goals? (Select all that apply)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="housing_goals" value="Find affordable rental housing"> Find affordable rental housing</div>
+                    <div><input type="checkbox" name="housing_goals" value="Maintain current housing situation"> Maintain current housing situation</div>
+                    <div><input type="checkbox" name="housing_goals" value="Become a first-time homebuyer"> Become a first-time homebuyer</div>
+                    <div><input type="checkbox" name="housing_goals" value="Prevent foreclosure"> Prevent foreclosure</div>
+                    <div><input type="checkbox" name="housing_goals" value="Access home repair assistance"> Access home repair assistance</div>
+                    <div><input type="checkbox" name="housing_goals" value="Downsize current home"> Downsize current home</div>
+                    <div><input type="checkbox" name="housing_goals" value="Locate senior/accessible housing"> Locate senior/accessible housing</div>
+                    <div><input type="checkbox" name="housing_goals" value="Find emergency housing"> Find emergency housing</div>
+                    <div>
+                        <input type="checkbox" name="housing_goals" value="Other" onclick="toggleOther('housing_goals_other')"> Other:
+                        <input type="text" id="housing_goals_other" style="display:none; width:80%;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">What housing-related resources have been most difficult to find? (Select up to 3)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="difficult_resources" value="Affordable housing listings" onclick="limitCheckboxes('difficult_resources', 3)"> Affordable housing listings</div>
+                    <div><input type="checkbox" name="difficult_resources" value="First-time homebuyer programs" onclick="limitCheckboxes('difficult_resources', 3)"> First-time homebuyer programs</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Down payment assistance" onclick="limitCheckboxes('difficult_resources', 3)"> Down payment assistance</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Mortgage refinancing options" onclick="limitCheckboxes('difficult_resources', 3)"> Mortgage refinancing options</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Foreclosure prevention services" onclick="limitCheckboxes('difficult_resources', 3)"> Foreclosure prevention services</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Rental assistance programs" onclick="limitCheckboxes('difficult_resources', 3)"> Rental assistance programs</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Housing voucher information" onclick="limitCheckboxes('difficult_resources', 3)"> Housing voucher information</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Emergency shelter information" onclick="limitCheckboxes('difficult_resources', 3)"> Emergency shelter information</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Legal help for housing issues" onclick="limitCheckboxes('difficult_resources', 3)"> Legal help for housing issues</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Home repair/modification programs" onclick="limitCheckboxes('difficult_resources', 3)"> Home repair/modification programs</div>
+                    <div><input type="checkbox" name="difficult_resources" value="Understanding the homebuying process" onclick="limitCheckboxes('difficult_resources', 3)"> Understanding the homebuying process</div>
+                    <div>
+                        <input type="checkbox" name="difficult_resources" value="Other" onclick="toggleOther('difficult_resources_other'); limitCheckboxes('difficult_resources', 3)"> Other:
+                        <input type="text" id="difficult_resources_other" style="display:none; width:80%;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">How do you currently search for housing information? (Select all that apply)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="search_methods" value="Internet searches"> Internet searches</div>
+                    <div><input type="checkbox" name="search_methods" value="Social service agencies"> Social service agencies</div>
+                    <div><input type="checkbox" name="search_methods" value="Bank/mortgage lender"> Bank/mortgage lender</div>
+                    <div><input type="checkbox" name="search_methods" value="Real estate professionals"> Real estate professionals</div>
+                    <div><input type="checkbox" name="search_methods" value="Housing counselors"> Housing counselors</div>
+                    <div><input type="checkbox" name="search_methods" value="Friends/family recommendations"> Friends/family recommendations</div>
+                    <div><input type="checkbox" name="search_methods" value="Social media groups"> Social media groups</div>
+                    <div><input type="checkbox" name="search_methods" value="Community organizations"> Community organizations</div>
+                    <div><input type="checkbox" name="search_methods" value="Government websites"> Government websites</div>
+                    <div><input type="checkbox" name="search_methods" value="I struggle to find information"> I struggle to find information</div>
+                </div>
+            </div>
+            
+            <button type="button" class="submit-button" onclick="nextSection(1, 2)">Next</button>
+        </div>
+
+        <!-- Section 2: App Features & Preferences -->
+        <div class="form-section" id="section2" style="display:none;">
+            <div class="section-title">App Features & Preferences</div>
+            
+            <div class="question">
+                <div class="question-text required">Which features would be most valuable in a housing resource app? (Select your top 3)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="valuable_features" value="Housing needs assessment tool" onclick="limitCheckboxes('valuable_features', 3)"> Housing needs assessment tool</div>
+                    <div><input type="checkbox" name="valuable_features" value="Directory of local housing resources and programs" onclick="limitCheckboxes('valuable_features', 3)"> Directory of local housing resources and programs</div>
+                    <div><input type="checkbox" name="valuable_features" value="First-time homebuyer guidance" onclick="limitCheckboxes('valuable_features', 3)"> First-time homebuyer guidance</div>
+                    <div><input type="checkbox" name="valuable_features" value="Mortgage calculator and affordability tools" onclick="limitCheckboxes('valuable_features', 3)"> Mortgage calculator and affordability tools</div>
+                    <div><input type="checkbox" name="valuable_features" value="Homeownership program eligibility checker" onclick="limitCheckboxes('valuable_features', 3)"> Homeownership program eligibility checker</div>
+                    <div><input type="checkbox" name="valuable_features" value="Emergency housing options" onclick="limitCheckboxes('valuable_features', 3)"> Emergency housing options</div>
+                    <div><input type="checkbox" name="valuable_features" value="Application status tracking for housing programs" onclick="limitCheckboxes('valuable_features', 3)"> Application status tracking for housing programs</div>
+                    <div><input type="checkbox" name="valuable_features" value="Step-by-step guides to getting housing assistance" onclick="limitCheckboxes('valuable_features', 3)"> Step-by-step guides to getting housing assistance</div>
+                    <div><input type="checkbox" name="valuable_features" value="Document checklist for housing applications" onclick="limitCheckboxes('valuable_features', 3)"> Document checklist for housing applications</div>
+                    <div><input type="checkbox" name="valuable_features" value="Information about housing rights and responsibilities" onclick="limitCheckboxes('valuable_features', 3)"> Information about housing rights and responsibilities</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">What device would you primarily use to access a housing resource app?</div>
+                <div class="options">
+                    <div><input type="radio" name="primary_device" value="Smartphone" required> Smartphone</div>
+                    <div><input type="radio" name="primary_device" value="Tablet"> Tablet</div>
+                    <div><input type="radio" name="primary_device" value="Computer"> Computer</div>
+                    <div><input type="radio" name="primary_device" value="Library/public computer"> Library/public computer</div>
+                    <div><input type="radio" name="primary_device" value="I don't have regular device access"> I don't have regular device access</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">What concerns would you have about using a housing resource app? (Select all that apply)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="app_concerns" value="Privacy/security of personal information"> Privacy/security of personal information</div>
+                    <div><input type="checkbox" name="app_concerns" value="Difficult to use or navigate"> Difficult to use or navigate</div>
+                    <div><input type="checkbox" name="app_concerns" value="Limited internet access"> Limited internet access</div>
+                    <div><input type="checkbox" name="app_concerns" value="Limited data plan"> Limited data plan</div>
+                    <div><input type="checkbox" name="app_concerns" value="Might not have up-to-date information"> Might not have up-to-date information</div>
+                    <div><input type="checkbox" name="app_concerns" value="Might not include programs I qualify for"> Might not include programs I qualify for</div>
+                    <div><input type="checkbox" name="app_concerns" value="Language barriers"> Language barriers</div>
+                    <div><input type="checkbox" name="app_concerns" value="None"> None</div>
+                    <div>
+                        <input type="checkbox" name="app_concerns" value="Other" onclick="toggleOther('app_concerns_other')"> Other:
+                        <input type="text" id="app_concerns_other" style="display:none; width:80%;">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="submit-button" style="background-color: #757575;" onclick="prevSection(2, 1)">Previous</button>
+            <button type="button" class="submit-button" onclick="nextSection(2, 3)">Next</button>
+        </div>
+
+        <!-- Section 3: Housing Challenges & Opportunities -->
+        <div class="form-section" id="section3" style="display:none;">
+            <div class="section-title">Housing Challenges & Opportunities</div>
+            
+            <div class="question">
+                <div class="question-text required">What is your biggest challenge related to housing? (Select one)</div>
+                <div class="options">
+                    <div><input type="radio" name="biggest_challenge" value="Finding affordable options" required> Finding affordable options</div>
+                    <div><input type="radio" name="biggest_challenge" value="Understanding eligibility for assistance programs"> Understanding eligibility for assistance programs</div>
+                    <div><input type="radio" name="biggest_challenge" value="Saving for down payment/security deposit"> Saving for down payment/security deposit</div>
+                    <div><input type="radio" name="biggest_challenge" value="Navigating the mortgage application process"> Navigating the mortgage application process</div>
+                    <div><input type="radio" name="biggest_challenge" value="Maintaining housing payments"> Maintaining housing payments</div>
+                    <div><input type="radio" name="biggest_challenge" value="Getting approved for rental/mortgage"> Getting approved for rental/mortgage</div>
+                    <div><input type="radio" name="biggest_challenge" value="Finding housing that meets my needs (size, location, etc.)"> Finding housing that meets my needs (size, location, etc.)</div>
+                    <div><input type="radio" name="biggest_challenge" value="Addressing credit issues"> Addressing credit issues</div>
+                    <div><input type="radio" name="biggest_challenge" value="Understanding legal rights"> Understanding legal rights</div>
+                    <div>
+                        <input type="radio" name="biggest_challenge" value="Other" onclick="toggleOther('biggest_challenge_other')"> Other:
+                        <input type="text" id="biggest_challenge_other" style="display:none; width:80%;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">If you're interested in homeownership, what's your biggest obstacle? (Skip if not applicable)</div>
+                <div class="options">
+                    <div><input type="radio" name="homeownership_obstacle" value="Saving for down payment"> Saving for down payment</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Understanding the homebuying process"> Understanding the homebuying process</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Finding affordable homes in my area"> Finding affordable homes in my area</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Credit score issues"> Credit score issues</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Student loan or other debt"> Student loan or other debt</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Unstable income"> Unstable income</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Unsure where to start"> Unsure where to start</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="High housing prices"> High housing prices</div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Don't know what programs I qualify for"> Don't know what programs I qualify for</div>
+                    <div>
+                        <input type="radio" name="homeownership_obstacle" value="Other" onclick="toggleOther('homeownership_obstacle_other')"> Other:
+                        <input type="text" id="homeownership_obstacle_other" style="display:none; width:80%;">
+                    </div>
+                    <div><input type="radio" name="homeownership_obstacle" value="Not applicable"> Not applicable</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">What specific information about homeownership would be most helpful to have in an app? (Skip if not interested in homeownership)</div>
+                <div class="options">
+                    <div><input type="checkbox" name="homeownership_info" value="Step-by-step first-time buyer guides"> Step-by-step first-time buyer guides</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Down payment assistance programs"> Down payment assistance programs</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Mortgage pre-qualification information"> Mortgage pre-qualification information</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Credit-building resources"> Credit-building resources</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Home maintenance guides"> Home maintenance guides</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Property tax information"> Property tax information</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Homeowners insurance guidance"> Homeowners insurance guidance</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Affordable home listings"> Affordable home listings</div>
+                    <div><input type="checkbox" name="homeownership_info" value="Foreclosure prevention resources"> Foreclosure prevention resources</div>
+                    <div>
+                        <input type="checkbox" name="homeownership_info" value="Other" onclick="toggleOther('homeownership_info_other')"> Other:
+                        <input type="text" id="homeownership_info_other" style="display:none; width:80%;">
+                    </div>
+                    <div><input type="checkbox" name="homeownership_info" value="Not applicable"> Not applicable</div>
+                </div>
+            </div>
+            
+            <button type="button" class="submit-button" style="background-color: #757575;" onclick="prevSection(3, 2)">Previous</button>
+            <button type="button" class="submit-button" onclick="nextSection(3, 4)">Next</button>
+        </div>
+
+        <!-- Section 4: Additional Information -->
+        <div class="form-section" id="section4" style="display:none;">
+            <div class="section-title">Additional Information</div>
+            
+            <div class="question">
+                <div class="question-text">What would make a housing resource app truly helpful for you?</div>
+                <textarea name="app_suggestions" rows="4"></textarea>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">How urgently are you seeking housing resources?</div>
+                <div class="options">
+                    <div><input type="radio" name="urgency" value="Immediate need (within days)" required> Immediate need (within days)</div>
+                    <div><input type="radio" name="urgency" value="Short-term need (within weeks)"> Short-term need (within weeks)</div>
+                    <div><input type="radio" name="urgency" value="Planning ahead (within months)"> Planning ahead (within months)</div>
+                    <div><input type="radio" name="urgency" value="Just researching options"> Just researching options</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text required">What is your household size?</div>
+                <div class="options">
+                    <div><input type="radio" name="household_size" value="Just me" required> Just me</div>
+                    <div><input type="radio" name="household_size" value="2 people"> 2 people</div>
+                    <div><input type="radio" name="household_size" value="3-4 people"> 3-4 people</div>
+                    <div><input type="radio" name="household_size" value="5+ people"> 5+ people</div>
+                </div>
+            </div>
+            
+            <button type="button" class="submit-button" style="background-color: #757575;" onclick="prevSection(4, 3)">Previous</button>
+            <button type="button" class="submit-button" onclick="nextSection(4, 5)">Next</button>
+        </div>
+
+        <!-- Section 5: Follow-up -->
+        <div class="form-section" id="section5" style="display:none;">
+            <div class="section-title">Follow-up</div>
+            
+            <div class="question">
+                <div class="question-text required">Would you be interested in testing our app when it's ready?</div>
+                <div class="options">
+                    <div><input type="radio" name="testing_interest" value="Yes" required onclick="toggleEmailField(true)"> Yes</div>
+                    <div><input type="radio" name="testing_interest" value="No" onclick="toggleEmailField(false)"> No</div>
+                </div>
+            </div>
+            
+            <div class="question" id="email_field" style="display:none;">
+                <div class="question-text">Email address (optional):</div>
+                <input type="email" name="email" placeholder="your@email.com">
+            </div>
+            
+            <button type="button" class="submit-button" style="background-color: #757575;" onclick="prevSection(5, 4)">Previous</button>
+            <button type="submit" class="submit-button">Submit Survey</button>
+        </div>
+    </form>
+
+    <div id="thankYouMessage" style="display:none; text-align:center; margin-top:30px;">
+        <h2>Thank you for completing our survey!</h2>
+        <p>Your feedback will help us build a better tool to connect people with housing resources.</p>
+        <p>If you provided your email, you'll be entered into our drawing for a $50 gift card.</p>
+    </div>
+
+    <script>
+        // Track current section
+        let currentSection = 1;
+        const totalSections = 5;
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercent = Math.round((currentSection - 1) / totalSections * 100);
+            document.getElementById('progress').style.width = progressPercent + '%';
+            document.getElementById('progress').innerText = progressPercent + '%';
+        }
+        
+        // Navigate to next section
+        function nextSection(current, next) {
+            // Validate current section
+            if (current === 1) {
+                if (!validateSection1()) return;
+            } else if (current === 2) {
+                if (!validateSection2()) return;
+            } else if (current === 3) {
+                if (!validateSection3()) return;
+            } else if (current === 4) {
+                if (!validateSection4()) return;
+            }
+            
+            // Hide current section
+            document.getElementById('section' + current).style.display = 'none';
+            // Show next section
+            document.getElementById('section' + next).style.display = 'block';
+            // Update current section
+            currentSection = next;
+            // Update progress
+            updateProgress();
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Navigate to previous section
+        function prevSection(current, prev) {
+            // Hide current section
+            document.getElementById('section' + current).style.display = 'none';
+            // Show previous section
+            document.getElementById('section' + prev).style.display = 'block';
+            // Update current section
+            currentSection = prev;
+            // Update progress
+            updateProgress();
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Toggle "Other" text field
+        function toggleOther(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.style.display = field.style.display === 'none' ? 'inline-block' : 'none';
+        }
+        
+        // Toggle email field based on testing interest
+        function toggleEmailField(show) {
+            document.getElementById('email_field').style.display = show ? 'block' : 'none';
+        }
+        
+        // Limit checkbox selections
+        function limitCheckboxes(checkboxName, limit) {
+            const checkboxes = document.getElementsByName(checkboxName);
+            let checkedCount = 0;
+            
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    checkedCount++;
+                }
+            }
+            
+            if (checkedCount > limit) {
+                alert('Please select only up to ' + limit + ' options.');
+                event.target.checked = false;
+            }
+        }
+        
+        // Validate Section 1
+        function validateSection1() {
+            // Check housing situation
+            if (!document.querySelector('input[name="housing_situation"]:checked')) {
+                alert('Please select your current housing situation.');
+                return false;
+            }
+            
+            // Check housing goals (at least one)
+            const housingGoals = document.getElementsByName('housing_goals');
+            let housingGoalsChecked = false;
+            for (let i = 0; i < housingGoals.length; i++) {
+                if (housingGoals[i].checked) {
+                    housingGoalsChecked = true;
+                    break;
+                }
+            }
+            if (!housingGoalsChecked) {
+                alert('Please select at least one housing goal.');
+                return false;
+            }
+            
+            // Check difficult resources (at least one)
+            const difficultResources = document.getElementsByName('difficult_resources');
+            let difficultResourcesChecked = false;
+            for (let i = 0; i < difficultResources.length; i++) {
+                if (difficultResources[i].checked) {
+                    difficultResourcesChecked = true;
+                    break;
+                }
+            }
+            if (!difficultResourcesChecked) {
+                alert('Please select at least one difficult resource to find.');
+                return false;
+            }
+            
+            // Check search methods (at least one)
+            const searchMethods = document.getElementsByName('search_methods');
+            let searchMethodsChecked = false;
+            for (let i = 0; i < searchMethods.length; i++) {
+                if (searchMethods[i].checked) {
+                    searchMethodsChecked = true;
+                    break;
+                }
+            }
+            if (!searchMethodsChecked) {
+                alert('Please select at least one method you use to search for housing information.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Validate Section 2
+        function validateSection2() {
+            // Check valuable features (at least one)
+            const valuableFeatures = document.getElementsByName('valuable_features');
+            let valuableFeaturesChecked = false;
+            for (let i = 0; i < valuableFeatures.length; i++) {
+                if (valuableFeatures[i].checked) {
+                    valuableFeaturesChecked = true;
+                    break;
+                }
+            }
+            if (!valuableFeaturesChecked) {
+                alert('Please select at least one valuable feature for a housing resource app.');
+                return false;
+            }
+            
+            // Check primary device
+            if (!document.querySelector('input[name="primary_device"]:checked')) {
+                alert('Please select your primary device for accessing a housing resource app.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Validate Section 3
+        function validateSection3() {
+            // Check biggest challenge
+            if (!document.querySelector('input[name="biggest_challenge"]:checked')) {
+                alert('Please select your biggest challenge related to housing.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Validate Section 4
+        function validateSection4() {
+            // Check urgency
+            if (!document.querySelector('input[name="urgency"]:checked')) {
+                alert('Please select how urgently you are seeking housing resources.');
+                return false;
+            }
+            
+            // Check household size
+            if (!document.querySelector('input[name="household_size"]:checked')) {
+                alert('Please select your household size.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Validate form on submit
+        function validateForm() {
+            // Check testing interest
+            if (!document.querySelector('input[name="testing_interest"]:checked')) {
+                alert('Please indicate whether you are interested in testing our app.');
+                return false;
+            }
+            
+            // Show thank you message
+            document.getElementById('housingForm').style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
+            
+            // In a real implementation, you would submit the form data to your server here
+            // For this demo, we're just showing the thank you message
+            
+            return false; // Prevent actual form submission
+        }
+        
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>
