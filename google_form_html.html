@@ -94,7 +94,8 @@
         <div class="progress" id="progress">0%</div>
     </div>
 
-    <form id="housingForm" action="https://formspree.io/f/your-formspree-code" method="POST" onsubmit="return validateForm() ">
+    <form id="housingForm" action="https://formspree.io/f/meogokwn" method="POST" onsubmit="return validateForm() ">
+
 
         <!-- Section 1: Housing Status & Needs -->
         <div class="form-section" id="section1">
@@ -542,11 +543,27 @@
         }
         
         // Validate form on submit
-        function validateForm() {
-            // Check testing interest
-            if (!document.querySelector('input[name="testing_interest"]:checked')) {
-                alert('Please indicate whether you are interested in testing our app.');
-                return false;
+      function validateForm() {
+    // Check testing interest
+ function validateForm() {
+    // Check testing interest
+    if (!document.querySelector('input[name="testing_interest"]:checked')) {
+        alert('Please indicate whether you are interested in testing our app.');
+        return false;
+    }
+    
+    // Show thank you message
+    document.getElementById('housingForm').style.display = 'none';
+    document.getElementById('thankYouMessage').style.display = 'block';
+    
+    // Return true to allow form submission to Formspree
+    return true;
+}
+
+    // Return true to allow form submission to Formspree
+    return true;
+}
+;
             }
             
             // Show thank you message
